@@ -1,5 +1,10 @@
 *.iml
 .gradle
+/.idea
+.gradle/
+bin/
+gen/
+out/
 /local.properties
 /.idea/caches
 /.idea/libraries
