@@ -1,26 +1,21 @@
 package com.example.pokemonapp.presentation
 
-import android.annotation.SuppressLint
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import androidx.savedstate.SavedStateRegistryOwner
 import com.example.pokemonapp.data.GetPokemonListUseCase
 import com.example.pokemonapp.data.Output
 import com.example.pokemonapp.data.PokemonRemoteDataSource
-import com.example.pokemonapp.data.PokemonRepository
 import com.example.pokemonapp.data.PokemonRepositoryImpl
 import com.example.pokemonapp.data.model.PokemonResponse
-import com.example.pokemonapp.data.remote.PokemonClient
 import kotlinx.coroutines.launch
 
 class PokemonViewModel(
     private val useCase: GetPokemonListUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
@@ -36,7 +31,7 @@ class PokemonViewModel(
             when (val output = useCase.invoke(pageIndex)) {
                 is Output.Success -> {
                     _pokemonList.value = output.value
-                    println("lista pokemons -> "+output.value.toString())
+                    println("lista pokemons -> " + output.value.toString())
                 }
                 is Output.Failure -> {
                     println("error aqui")
@@ -50,12 +45,10 @@ class PokemonViewModel(
         pageIndex++
         getPokemonList()
     }
-
-
 }
 
 class PokemonViewModelFactory(
-): AbstractSavedStateViewModelFactory() {
+) : AbstractSavedStateViewModelFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(key: String, modelClass: Class<T>, handle: SavedStateHandle): T {

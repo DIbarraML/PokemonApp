@@ -1,18 +1,12 @@
 package com.example.pokemonapp
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.example.pokemonapp.data.model.PokemonData
-import com.example.pokemonapp.data.remote.PokemonClient
-import kotlin.concurrent.thread
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import com.example.pokemonapp.databinding.ActivityMainBinding
 import com.example.pokemonapp.presentation.PokemonAdapter
 import com.example.pokemonapp.presentation.PokemonListener
@@ -51,7 +45,7 @@ class MainActivity : AppCompatActivity(), PokemonListener {
     }
 
     private fun getItemSelected(pokemonData: PokemonData) {
-        println("name pokemon-> "+pokemonData.name)
+        println("name pokemon-> " + pokemonData.name)
     }
 
     override fun pokemonSelected(pokemonData: PokemonData) {
