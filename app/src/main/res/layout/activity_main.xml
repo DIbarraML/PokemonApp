@@ -14,6 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:scrollbars="vertical"
         tools:listitem="@layout/item_pokemon"
         app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
