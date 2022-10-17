@@ -12,6 +12,7 @@ import com.example.pokemonapp.presentation.PokemonAdapter
 import com.example.pokemonapp.presentation.PokemonListener
 import com.example.pokemonapp.presentation.PokemonViewModel
 import com.example.pokemonapp.presentation.PokemonViewModelFactory
+import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 
 class MainActivity : AppCompatActivity(), PokemonListener {
 
@@ -19,16 +20,24 @@ class MainActivity : AppCompatActivity(), PokemonListener {
     private val viewModel: PokemonViewModel by viewModels {
         PokemonViewModelFactory()
     }
+    private lateinit var paginator: RecyclerViewPaginator
 
-    private var adapter = PokemonAdapter(listOf()) { getItemSelected(it) }
+    private var adapter = PokemonAdapter(mutableListOf()) { getItemSelected(it) }
 
-    @SuppressLint("LogConditional")
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_PokemonApp)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        paginator = RecyclerViewPaginator(
+            recyclerView = binding.recyclerPokemon,
+            isLoading = { false },
+            onLast = { false },
+            loadMore = { viewModel.getNextPokemonList() }
+        )
+        paginator.threshold = 2
 
         binding.recyclerPokemon.adapter = adapter
         viewModel.getPokemonList()
@@ -40,7 +49,8 @@ class MainActivity : AppCompatActivity(), PokemonListener {
         }
 
         viewModel.pokemonList.observe(this) {
-            adapter.listPokemon = it.listResults
+            adapter.listPokemon.addAll(it.listResults)
+            adapter.notifyDataSetChanged()
         }
     }
 
@@ -48,11 +58,7 @@ class MainActivity : AppCompatActivity(), PokemonListener {
         println("name pokemon-> " + pokemonData.name)
     }
 
-    override fun pokemonSelected(pokemonData: PokemonData) {
-        TODO("Not yet implemented")
-    }
-
     override fun getNextPokemonList() {
-        TODO("Not yet implemented")
+        viewModel.getNextPokemonList()
     }
 }

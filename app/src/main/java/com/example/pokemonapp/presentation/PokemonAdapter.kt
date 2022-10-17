@@ -8,7 +8,7 @@ import com.example.pokemonapp.data.model.PokemonData
 import com.example.pokemonapp.databinding.ItemPokemonBinding
 import com.example.pokemonapp.loadImageOrFallback
 
-class PokemonAdapter(var listPokemon: List<PokemonData>, private val onClickListener: (PokemonData) -> Unit) :
+class PokemonAdapter(var listPokemon: MutableList<PokemonData>, private val onClickListener: (PokemonData) -> Unit) :
     RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
