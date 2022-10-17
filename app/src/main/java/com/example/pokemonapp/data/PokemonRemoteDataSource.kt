@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class PokemonRemoteDataSource(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val context: Context
+    val context: Context
 ) {
 
     private val pokemonService: PokemonService =
