@@ -30,7 +30,7 @@ class PokemonAdapter(var listPokemon: MutableList<PokemonData>, private val onCl
 
         fun bind(pokemonData: PokemonData, onClickListener: (PokemonData) -> Unit) = with(binding) {
             namePokemon.text = pokemonData.name
-            imagePokemon.loadImageOrFallback(pokemonData.getImageUrl(), R.drawable.bola_pokemon)
+            imagePokemon.loadImageOrFallback(pokemonData.getImageUrl(), R.drawable.pokeball)
             binding.cardView.setOnClickListener {
                 onClickListener.invoke(pokemonData)
             }

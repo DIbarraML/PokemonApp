@@ -12,13 +12,14 @@ import com.example.pokemonapp.presentation.PokemonAdapter
 import com.example.pokemonapp.presentation.PokemonListener
 import com.example.pokemonapp.presentation.PokemonViewModel
 import com.example.pokemonapp.presentation.PokemonViewModelFactory
+import com.example.pokemonapp.presentation.UIState
 import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 
 class MainActivity : AppCompatActivity(), PokemonListener {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: PokemonViewModel by viewModels {
-        PokemonViewModelFactory()
+        PokemonViewModelFactory(application)
     }
     private lateinit var paginator: RecyclerViewPaginator
 
@@ -40,11 +41,17 @@ class MainActivity : AppCompatActivity(), PokemonListener {
         paginator.threshold = 2
 
         binding.recyclerPokemon.adapter = adapter
+        binding.refresh.setOnClickListener {
+            println("REFRESH")
+            viewModel.getPokemonList()
+        }
         viewModel.getPokemonList()
 
-        viewModel.isLoading.observe(this) { visible ->
-            binding.progressBar.apply {
-                if (visible) isVisible = true else isGone = true
+        viewModel.stateEvent.observe(this) {
+            when (it) {
+                is UIState.LayoutView -> { showLayoutView() }
+                is UIState.Loading -> { binding.progressBar.isVisible = true }
+                is UIState.Error -> { showLayoutError( it.messageError ) }
             }
         }
 
@@ -52,6 +59,19 @@ class MainActivity : AppCompatActivity(), PokemonListener {
             adapter.listPokemon.addAll(it.listResults)
             adapter.notifyDataSetChanged()
         }
+    }
+
+    private fun showLayoutView() {
+        binding.recyclerPokemon.isVisible = true
+        binding.layoutError.isGone = true
+        binding.progressBar.isGone = true
+    }
+
+    private fun showLayoutError(messageError: String) {
+        binding.textWarning.text = messageError
+        binding.layoutError.isVisible = true
+        binding.recyclerPokemon.isGone = true
+        binding.progressBar.isGone = true
     }
 
     private fun getItemSelected(pokemonData: PokemonData) {

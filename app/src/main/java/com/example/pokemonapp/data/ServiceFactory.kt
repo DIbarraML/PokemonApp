@@ -1,5 +1,6 @@
 package com.example.pokemonapp.data
 
+import android.content.Context
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -14,10 +15,12 @@ object ServiceFactory {
         repositoryApiClass: Class<T>,
         timeOut: Long = TIME_OUT,
         timeUnit: TimeUnit = TimeUnit.MILLISECONDS,
+        context: Context
     ): T {
         val myClient = OkHttpClient.Builder()
             .connectTimeout(timeOut, timeUnit)
             .readTimeout(timeOut, timeUnit)
+            .addInterceptor(ConnectivityStateInterceptor(context))
             .build()
 
         return Retrofit.Builder()
