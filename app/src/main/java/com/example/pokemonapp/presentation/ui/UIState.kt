@@ -1,4 +1,4 @@
-package com.example.pokemonapp.presentation
+package com.example.pokemonapp.presentation.ui
 
 sealed class UIState {
     object LayoutView : UIState()

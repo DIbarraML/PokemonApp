@@ -1,8 +1,9 @@
-package com.example.pokemonapp.presentation
+package com.example.pokemonapp.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.pokemonapp.presentation.ui.UIState
 
 abstract class BaseViewModel : ViewModel() {
 

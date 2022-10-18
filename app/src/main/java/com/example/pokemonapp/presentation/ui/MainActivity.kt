@@ -1,4 +1,4 @@
-package com.example.pokemonapp
+package com.example.pokemonapp.presentation.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,13 +6,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import com.example.pokemonapp.R
 import com.example.pokemonapp.data.model.PokemonData
 import com.example.pokemonapp.databinding.ActivityMainBinding
-import com.example.pokemonapp.presentation.PokemonAdapter
 import com.example.pokemonapp.presentation.PokemonListener
-import com.example.pokemonapp.presentation.PokemonViewModel
-import com.example.pokemonapp.presentation.PokemonViewModelFactory
-import com.example.pokemonapp.presentation.UIState
+import com.example.pokemonapp.presentation.viewmodel.PokemonViewModel
+import com.example.pokemonapp.presentation.viewmodel.PokemonViewModelFactory
 import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 
 class MainActivity : AppCompatActivity(), PokemonListener {
@@ -56,11 +55,16 @@ class MainActivity : AppCompatActivity(), PokemonListener {
         }
 
         viewModel.pokemonList.observe(this) {
-            adapter.listPokemon.addAll(it.listResults)
+
+        }
+
+        viewModel.pokemonList.observe(this) {
+            adapter.listPokemon = it
             adapter.notifyDataSetChanged()
         }
     }
 
+    @SuppressLint("Recycle")
     private fun showLayoutView() {
         binding.recyclerPokemon.isVisible = true
         binding.layoutError.isGone = true

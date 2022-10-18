@@ -1,6 +1,7 @@
 package com.example.pokemonapp.data
 
 import android.content.Context
+import com.example.pokemonapp.data.remote.ConnectivityStateInterceptor
 import java.util.concurrent.TimeUnit
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

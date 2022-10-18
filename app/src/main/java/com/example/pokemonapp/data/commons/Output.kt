@@ -1,4 +1,4 @@
-package com.example.pokemonapp.data
+package com.example.pokemonapp.data.commons
 
 import java.lang.Exception
 

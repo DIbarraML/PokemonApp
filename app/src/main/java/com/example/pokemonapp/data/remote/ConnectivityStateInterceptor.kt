@@ -1,4 +1,4 @@
-package com.example.pokemonapp.data
+package com.example.pokemonapp.data.remote
 
 import android.content.Context
 import android.net.ConnectivityManager
