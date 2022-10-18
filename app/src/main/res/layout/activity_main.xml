@@ -7,70 +7,93 @@
     android:backgroundTint="@color/black"
     tools:context=".presentation.ui.MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_pokemon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scrollbarThumbVertical="@drawable/scrollbar"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/item_pokemon"
-        app:spanCount="2"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/layout_error"
+    <FrameLayout
+        android:id="@+id/container_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center"
-        android:visibility="gone"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        <ImageView
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/warning" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/text_warning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textIsSelectable="true"
-            android:visibility="visible"
-            />
-
-        <ImageView
-            android:id="@+id/refresh"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="fitCenter"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/ic_baseline_refresh_24"
-            />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_pokemon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scrollbarThumbVertical="@drawable/scrollbar"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_pokemon"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/warning" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_warning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textIsSelectable="true"
+                android:visibility="visible"
+                />
+
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_baseline_refresh_24"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

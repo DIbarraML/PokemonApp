@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PokemonApp</string>
+    <string name="colon">:</string>
+    <string name="abilities">Abilities:</string>
+    <string name="moves">Moves:</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

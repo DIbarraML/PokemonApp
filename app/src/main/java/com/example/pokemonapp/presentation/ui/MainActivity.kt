@@ -1,34 +1,37 @@
 package com.example.pokemonapp.presentation.ui
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentTransaction
 import com.example.pokemonapp.R
 import com.example.pokemonapp.data.model.PokemonData
 import com.example.pokemonapp.databinding.ActivityMainBinding
+import com.example.pokemonapp.presentation.PokemonInfoListener
 import com.example.pokemonapp.presentation.PokemonListener
+import com.example.pokemonapp.presentation.delegate.viewBinding
 import com.example.pokemonapp.presentation.viewmodel.PokemonViewModel
 import com.example.pokemonapp.presentation.viewmodel.PokemonViewModelFactory
 import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 
-class MainActivity : AppCompatActivity(), PokemonListener {
+class MainActivity : AppCompatActivity(), PokemonListener, PokemonInfoListener {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding: ActivityMainBinding by viewBinding()
     private val viewModel: PokemonViewModel by viewModels {
         PokemonViewModelFactory(application)
     }
     private lateinit var paginator: RecyclerViewPaginator
 
-    private var adapter = PokemonAdapter(mutableListOf()) { getItemSelected(it) }
+    private var adapter = PokemonAdapter(mutableListOf(), this)
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_PokemonApp)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         paginator = RecyclerViewPaginator(
@@ -78,11 +81,31 @@ class MainActivity : AppCompatActivity(), PokemonListener {
         binding.progressBar.isGone = true
     }
 
-    private fun getItemSelected(pokemonData: PokemonData) {
-        println("name pokemon-> " + pokemonData.name)
-    }
-
     override fun getNextPokemonList() {
         viewModel.getNextPokemonList()
     }
+
+    override fun getInfo(pokemonData: PokemonData, bitmap: Bitmap) {
+        println("name pokemon-> " + pokemonData.name)
+        val dialogPokemonFragment = DialogPokemonFragment()
+        /*val transaction = supportFragmentManager.beginTransaction()
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        transaction.add(R.id.container_fragment, dialogPokemonFragment)
+            .addToBackStack(null)
+            .commit()
+        binding.containerView.isGone = true*/
+        dialogPokemonFragment.show(supportFragmentManager, "dialog")
+        /*val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragment = PokemonDetailFragment()
+        fragmentTransaction.add(R.id.container_fragment, fragment)
+        fragmentTransaction.commit()
+        binding.containerView.isGone = true*/
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+    }
+
 }
