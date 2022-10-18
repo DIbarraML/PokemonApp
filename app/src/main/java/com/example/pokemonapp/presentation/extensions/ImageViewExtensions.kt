@@ -1,4 +1,4 @@
-package com.example.pokemonapp
+package com.example.pokemonapp.presentation.extensions
 
 import android.content.Context
 import android.graphics.drawable.Drawable

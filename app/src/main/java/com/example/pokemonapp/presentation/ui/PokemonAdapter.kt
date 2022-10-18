@@ -3,14 +3,13 @@ package com.example.pokemonapp.presentation.ui
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemonapp.R
 import com.example.pokemonapp.data.model.PokemonData
 import com.example.pokemonapp.databinding.ItemPokemonBinding
-import com.example.pokemonapp.loadImageOrFallback
-import com.example.pokemonapp.presentation.extensions.Utils
-import com.example.pokemonapp.presentation.extensions.nextInt
-import kotlin.random.Random
+import com.example.pokemonapp.presentation.extensions.loadImageOrFallback
 
 class PokemonAdapter(var listPokemon: List<PokemonData>, private val onClickListener: (PokemonData) -> Unit) :
     RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
@@ -36,8 +35,11 @@ class PokemonAdapter(var listPokemon: List<PokemonData>, private val onClickList
             namePokemon.text = pokemonData.name
             imagePokemon.loadImageOrFallback(pokemonData.getImageUrl(), R.drawable.pokeball)
             binding.cardView.apply {
-                backgroundTintList = ColorStateList.valueOf(Utils.getBackgroundColorAleatory())
-                println("color es -> ${Random.nextInt(IntRange(60, 255))}")
+                val bitmap = imagePokemon.drawable.toBitmap()
+                val palette = Palette.from(bitmap).generate()
+                palette.dominantSwatch?.let {
+                    this.backgroundTintList = ColorStateList.valueOf(it.rgb)
+                }
                 setOnClickListener {
                     onClickListener.invoke(pokemonData)
                 }
