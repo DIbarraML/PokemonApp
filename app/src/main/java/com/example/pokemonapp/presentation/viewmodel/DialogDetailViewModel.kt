@@ -37,7 +37,6 @@ class DialogDetailViewModel(
                     listMoreInfo(output.value)
                 }
                 is Output.Failure -> {
-                    println("FAILURE -> ${output.exception.message}")
                     showErrorView(getErrorMessage(output.exception))
                 }
             }
