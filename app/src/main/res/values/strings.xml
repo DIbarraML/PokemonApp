@@ -5,4 +5,7 @@
     <string name="moves">Moves:</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="lost_connection">Se ha perdido la conexión a internet</string>
+    <string name="warning_system">Lo sentimos, tenemos inconvenientes en el sistema</string>
+    <string name="without_internet">Sin acceso a internet</string>
 </resources>

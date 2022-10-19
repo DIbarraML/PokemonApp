@@ -1,24 +1,23 @@
 package com.example.pokemonapp.presentation.ui
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentTransaction
 import com.example.pokemonapp.R
 import com.example.pokemonapp.data.model.PokemonData
 import com.example.pokemonapp.databinding.ActivityMainBinding
-import com.example.pokemonapp.presentation.PokemonInfoListener
 import com.example.pokemonapp.presentation.PokemonListener
 import com.example.pokemonapp.presentation.delegate.viewBinding
+import com.example.pokemonapp.presentation.ui.DialogPokemonFragment.Companion.PARAM_EXTRA_POKEMON
 import com.example.pokemonapp.presentation.viewmodel.PokemonViewModel
 import com.example.pokemonapp.presentation.viewmodel.PokemonViewModelFactory
 import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 
-class MainActivity : AppCompatActivity(), PokemonListener, PokemonInfoListener {
+class MainActivity : AppCompatActivity(), PokemonListener {
 
     private val binding: ActivityMainBinding by viewBinding()
     private val viewModel: PokemonViewModel by viewModels {
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity(), PokemonListener, PokemonInfoListener {
     }
     private lateinit var paginator: RecyclerViewPaginator
 
-    private var adapter = PokemonAdapter(mutableListOf(), this)
+    private var adapter = PokemonAdapter(mutableListOf()) { getInfo(it) }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,10 +43,18 @@ class MainActivity : AppCompatActivity(), PokemonListener, PokemonInfoListener {
 
         binding.recyclerPokemon.adapter = adapter
         binding.refresh.setOnClickListener {
-            println("REFRESH")
+            it.isGone = true
             viewModel.getPokemonList()
         }
         viewModel.getPokemonList()
+
+        viewModel.event.observe(this) {
+            when (it) {
+                is EventPokemonList.LostConnection -> {
+                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
         viewModel.stateEvent.observe(this) {
             when (it) {
@@ -79,33 +86,19 @@ class MainActivity : AppCompatActivity(), PokemonListener, PokemonInfoListener {
         binding.layoutError.isVisible = true
         binding.recyclerPokemon.isGone = true
         binding.progressBar.isGone = true
+        binding.refresh.isVisible = true
     }
 
     override fun getNextPokemonList() {
         viewModel.getNextPokemonList()
     }
 
-    override fun getInfo(pokemonData: PokemonData, bitmap: Bitmap) {
-        println("name pokemon-> " + pokemonData.name)
-        val dialogPokemonFragment = DialogPokemonFragment()
-        /*val transaction = supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-        transaction.add(R.id.container_fragment, dialogPokemonFragment)
-            .addToBackStack(null)
-            .commit()
-        binding.containerView.isGone = true*/
-        dialogPokemonFragment.show(supportFragmentManager, "dialog")
-        /*val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        val fragment = PokemonDetailFragment()
-        fragmentTransaction.add(R.id.container_fragment, fragment)
-        fragmentTransaction.commit()
-        binding.containerView.isGone = true*/
+    private fun getInfo(pokemonData: PokemonData) {
+        val dialogPokemonFragment = DialogPokemonFragment.newInstance()
+        dialogPokemonFragment.isCancelable = false
+        val bundle = Bundle()
+        bundle.putParcelable(PARAM_EXTRA_POKEMON, pokemonData)
+        dialogPokemonFragment.arguments = bundle
+        dialogPokemonFragment.show(supportFragmentManager, null)
     }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-    }
-
 }
