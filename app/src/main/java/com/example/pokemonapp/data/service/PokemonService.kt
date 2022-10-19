@@ -23,6 +23,11 @@ interface PokemonService {
         @Path("name") name: String
     ): Response<PokemonDetail>
 
+    @GET("pokemon/{name}")
+    suspend fun getPokemonDetail2(
+        @Path("name") name: String
+    ): Response<JsonElement>
+
     @GET("ability/{name}")
     suspend fun getAbility(
         @Path("name") name: String

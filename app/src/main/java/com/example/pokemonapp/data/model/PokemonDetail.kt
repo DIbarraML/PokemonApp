@@ -5,8 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class PokemonDetail(
     val abilities: List<Ability>,
     val moves: List<Move>,
-    val name: String,
-    val types: Types
+    val name: String
 ) {
 
     data class Ability(
@@ -28,17 +27,5 @@ data class PokemonDetail(
     data class MoveX(
         val name: String,
         val url: String
-    )
-
-    data class Types(
-        val types: List<Type>
-    )
-
-    data class Type(
-        val type: TypeX
-    )
-
-    data class TypeX(
-        val name: String
     )
 }

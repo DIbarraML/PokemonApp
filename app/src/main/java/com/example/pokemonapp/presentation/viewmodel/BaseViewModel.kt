@@ -3,9 +3,8 @@ package com.example.pokemonapp.presentation.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.pokemonapp.R
 import com.example.pokemonapp.data.service.exceptions.NoConnectivityException
-import com.example.pokemonapp.presentation.ui.UIState
+import com.example.pokemonapp.presentation.events.UIState
 import java.lang.Exception
 
 abstract class BaseViewModel : ViewModel() {

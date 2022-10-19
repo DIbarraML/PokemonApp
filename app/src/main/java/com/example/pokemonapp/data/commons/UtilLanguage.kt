@@ -7,7 +7,7 @@ enum class UtilLanguage(private val language: String) {
     SPANISH("es");
 
     companion object {
-        fun fromButtonStyleName(language: String) =
+        fun fromLanguage(language: String) =
             values().firstOrNull { it.language == language }
     }
 }

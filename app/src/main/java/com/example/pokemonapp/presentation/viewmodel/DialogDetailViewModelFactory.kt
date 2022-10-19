@@ -9,7 +9,6 @@ import com.example.pokemonapp.data.repository.PokemonRepositoryImpl
 import com.example.pokemonapp.data.usecase.GetAbilityUseCase
 import com.example.pokemonapp.data.usecase.GetMoveUseCase
 import com.example.pokemonapp.data.usecase.GetPokemonDetailUseCase
-import com.example.pokemonapp.presentation.ui.DialogDetailViewModel
 
 class DialogDetailViewModelFactory(private val application: Application) : AbstractSavedStateViewModelFactory() {
 

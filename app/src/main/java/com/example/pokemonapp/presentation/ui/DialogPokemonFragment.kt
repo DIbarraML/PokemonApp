@@ -1,34 +1,30 @@
 package com.example.pokemonapp.presentation.ui
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.Application
 import android.app.Dialog
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokemonapp.R
+import com.example.pokemonapp.data.commons.UtilLanguage
+import com.example.pokemonapp.data.model.AbilityInfo
+import com.example.pokemonapp.data.model.MoveInfo
 import com.example.pokemonapp.data.model.PokemonData
 import com.example.pokemonapp.databinding.FragmentPokemonDetailBinding
 import com.example.pokemonapp.presentation.extensions.loadImageOrFallback
+import com.example.pokemonapp.presentation.viewmodel.DialogDetailViewModel
 import com.example.pokemonapp.presentation.viewmodel.DialogDetailViewModelFactory
 
-class DialogPokemonFragment: DialogFragment() {
+class DialogPokemonFragment : DialogFragment() {
 
     private lateinit var binding: FragmentPokemonDetailBinding
 
-    val viewmodel: DialogDetailViewModel by viewModels {
+    private val viewModel: DialogDetailViewModel by viewModels {
         DialogDetailViewModelFactory(requireActivity().application)
     }
 
@@ -47,30 +43,68 @@ class DialogPokemonFragment: DialogFragment() {
 
     private fun setViews() {
         val pokemon = arguments?.get(PARAM_EXTRA_POKEMON) as PokemonData
-        //val bitmap = arguments?.get(PARAM_EXTRA_BITMAP) as Bitmap
-
         binding.namePokemon.text = pokemon.name
         binding.imagePokemon.loadImageOrFallback(pokemon.getImageUrl(), R.drawable.pokeball)
         binding.back.setOnClickListener {
             dismiss()
         }
+        viewModel.getPokemonDetail(pokemon.name)
 
+        viewModel.pokemonAbility.observe(this) {
+            binding.recyclerAbility.layoutManager = LinearLayoutManager(context)
+            binding.recyclerAbility.adapter = SimpleItemAdapter(getAbilities(it))
 
+        }
 
-        println("qwewqeqwe-> ${pokemon.toString()}")
+        viewModel.pokemonMove.observe(this) {
+            binding.recyclerMove.layoutManager = LinearLayoutManager(context)
+            binding.recyclerMove.adapter = SimpleItemAdapter(getMoves(it))
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-        //val viewmodel = ViewModelProvider(MainActivity.context).get(DialogDetailViewModel::class.java)
-
+    private fun getMoves(list: List<MoveInfo>): ArrayList<HashMap<String, String>> {
+        val listMoves: ArrayList<HashMap<String, String>> = arrayListOf()
+        list.map { moveInfo ->
+            val hashMap: HashMap<String, String> = hashMapOf()
+            moveInfo.effect_entries.map {
+                wrapper(it)?.let { description ->
+                    hashMap[HASH_NAME] = moveInfo.name
+                    hashMap[HASH_DESCRIPTION] = description
+                    listMoves.add(hashMap)
+                }
+            }
+        }
+        return listMoves
     }
+
+    private fun getAbilities(list: List<AbilityInfo>): ArrayList<HashMap<String, String>> {
+        val listAbilities: ArrayList<HashMap<String, String>> = arrayListOf()
+        list.map { ability ->
+            val hashMap: HashMap<String, String> = hashMapOf()
+            ability.effect_entries.map {
+                wrapper(it)?.let { description ->
+                    hashMap[HASH_NAME] = ability.name
+                    hashMap[HASH_DESCRIPTION] = description
+                    listAbilities.add(hashMap)
+                }
+            }
+        }
+        return listAbilities
+    }
+
+    private fun wrapper(effectEntry: AbilityInfo.EffectEntry): String? {
+        return if (UtilLanguage.fromLanguage(effectEntry.language.name) == UtilLanguage.ENGLISH) {
+            effectEntry.short_effect
+        } else {
+            null
+        }
+    }
+
+
 
     companion object {
-        fun newInstance() = DialogPokemonFragment()
-        const val PARAM_EXTRA_BITMAP = "bitmap"
         const val PARAM_EXTRA_POKEMON = "pokemon"
+        const val HASH_NAME = "name"
+        const val HASH_DESCRIPTION = "description"
     }
 }

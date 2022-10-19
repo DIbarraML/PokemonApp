@@ -4,7 +4,7 @@ data class MoveInfo(
     val contest_combos: ContestCombos,
     val damage_class: DamageClass,
     val effect_chance: Int,
-    val effect_entries: List<EffectEntry>,
+    val effect_entries: List<AbilityInfo.EffectEntry>,
     val id: Int,
     val name: String,
     val power: Int
@@ -17,12 +17,6 @@ data class ContestCombos(
 data class DamageClass(
     val name: String,
     val url: String
-)
-
-data class EffectEntry(
-    val effect: String,
-    val language: Language,
-    val short_effect: String
 )
 
 data class Normal(

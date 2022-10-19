@@ -8,6 +8,7 @@ import com.example.pokemonapp.data.model.MoveInfo
 import com.example.pokemonapp.data.model.PokemonDetail
 import com.example.pokemonapp.data.model.PokemonResponse
 import com.example.pokemonapp.data.service.PokemonService
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

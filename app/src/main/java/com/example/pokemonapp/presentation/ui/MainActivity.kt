@@ -12,6 +12,8 @@ import com.example.pokemonapp.data.model.PokemonData
 import com.example.pokemonapp.databinding.ActivityMainBinding
 import com.example.pokemonapp.presentation.PokemonListener
 import com.example.pokemonapp.presentation.delegate.viewBinding
+import com.example.pokemonapp.presentation.events.EventPokemonList
+import com.example.pokemonapp.presentation.events.UIState
 import com.example.pokemonapp.presentation.ui.DialogPokemonFragment.Companion.PARAM_EXTRA_POKEMON
 import com.example.pokemonapp.presentation.viewmodel.PokemonViewModel
 import com.example.pokemonapp.presentation.viewmodel.PokemonViewModelFactory
@@ -94,7 +96,7 @@ class MainActivity : AppCompatActivity(), PokemonListener {
     }
 
     private fun getInfo(pokemonData: PokemonData) {
-        val dialogPokemonFragment = DialogPokemonFragment.newInstance()
+        val dialogPokemonFragment = DialogPokemonFragment()
         dialogPokemonFragment.isCancelable = false
         val bundle = Bundle()
         bundle.putParcelable(PARAM_EXTRA_POKEMON, pokemonData)

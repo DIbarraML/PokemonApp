@@ -2,6 +2,7 @@ package com.example.pokemonapp.presentation.ui
 
 import android.content.DialogInterface
 import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
@@ -38,13 +39,11 @@ class PokemonAdapter(var listPokemon: List<PokemonData>, private val onClickList
                 R.drawable.pokeball,
                 object : com.squareup.picasso.Callback {
                     override fun onSuccess() {
-                        println("bind onsuccess->")
                         val palette = Palette.from(imagePokemon.drawable.toBitmap()).generate()
                         palette.dominantSwatch?.let { cardView.backgroundTintList = ColorStateList.valueOf(it.rgb) }
                     }
 
                     override fun onError() {
-                        println("bind onerror->")
                     }
                 })
             namePokemon.text = pokemonData.name

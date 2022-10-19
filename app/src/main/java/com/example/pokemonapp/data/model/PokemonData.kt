@@ -13,7 +13,6 @@ data class PokemonData(
 ) : Parcelable {
     fun getImageUrl(): String {
         val index = urlImage.split("/".toRegex()).dropLast(1).last()
-        println("name ->$name")
         return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$index.png"
     }
 }
