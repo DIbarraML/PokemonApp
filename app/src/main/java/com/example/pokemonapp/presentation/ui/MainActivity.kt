@@ -60,9 +60,15 @@ class MainActivity : AppCompatActivity(), PokemonListener {
 
         viewModel.stateEvent.observe(this) {
             when (it) {
-                is UIState.LayoutView -> { showLayoutView() }
-                is UIState.Loading -> { binding.progressBar.isVisible = true }
-                is UIState.Error -> { showLayoutError( it.messageError ) }
+                is UIState.LayoutView -> {
+                    showLayoutView()
+                }
+                is UIState.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                is UIState.Error -> {
+                    showLayoutError(it.messageError)
+                }
             }
         }
 

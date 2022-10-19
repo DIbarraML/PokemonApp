@@ -100,8 +100,6 @@ class DialogPokemonFragment : DialogFragment() {
         }
     }
 
-
-
     companion object {
         const val PARAM_EXTRA_POKEMON = "pokemon"
         const val HASH_NAME = "name"

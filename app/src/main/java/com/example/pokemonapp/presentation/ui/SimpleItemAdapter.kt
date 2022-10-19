@@ -1,14 +1,11 @@
 package com.example.pokemonapp.presentation.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.SimpleAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemonapp.databinding.InfoItemBinding
-import com.example.pokemonapp.databinding.ItemPokemonBinding
 
-class SimpleItemAdapter(val list: ArrayList<HashMap<String, String>>): RecyclerView.Adapter<SimpleItemAdapter.ViewHolder>() {
+class SimpleItemAdapter(val list: ArrayList<HashMap<String, String>>) : RecyclerView.Adapter<SimpleItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = InfoItemBinding.inflate(

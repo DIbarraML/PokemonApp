@@ -39,7 +39,6 @@ class PokemonViewModel(
                     } else {
                         _event.value = EventPokemonList.LostConnection(R.string.lost_connection)
                     }
-
                 }
             }
         }

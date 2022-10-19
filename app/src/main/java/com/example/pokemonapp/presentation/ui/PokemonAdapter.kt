@@ -1,8 +1,6 @@
 package com.example.pokemonapp.presentation.ui
 
-import android.content.DialogInterface
 import android.content.res.ColorStateList
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
@@ -33,7 +31,7 @@ class PokemonAdapter(var listPokemon: List<PokemonData>, private val onClickList
 
     class ViewHolder(private val binding: ItemPokemonBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(pokemonData: PokemonData,  onClickListener: (PokemonData) -> Unit) = with(binding) {
+        fun bind(pokemonData: PokemonData, onClickListener: (PokemonData) -> Unit) = with(binding) {
             imagePokemon.loadImageOrFallback(
                 pokemonData.getImageUrl(),
                 R.drawable.pokeball,
@@ -48,7 +46,7 @@ class PokemonAdapter(var listPokemon: List<PokemonData>, private val onClickList
                 })
             namePokemon.text = pokemonData.name
             cardView.apply {
-                setOnClickListener  {
+                setOnClickListener {
                     onClickListener.invoke(pokemonData)
                 }
             }
